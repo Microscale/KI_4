@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Website with Blog, FAQ, Socials, About, and Contact</title>
+  <!-- Google Font: Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    body {
+      margin: 0;
+      background-color: #171817;
+      font-family: 'Montserrat', sans-serif;
+      color: #D9CDD4;
+      scroll-behavior: smooth;
+    }
+    
+    /* Navigation Bar */
+    nav {
+      background-color: #171817;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      z-index: 1000;
+    }
+    .nav-container {
+      position: relative;
+      max-width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* Logo */
+    .logo {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .logo img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+    /* Navigation Menu */
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-menu li a {
+      text-decoration: none;
+      color: #D9CDD4;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .nav-menu li a:hover {
+      background-color: #DE4590;
+      color: #171817;
+    }
+    .nav-menu li a.active {
+      background-color: #DE4590;
+      color: #171817;
+    }
+    @media (max-width: 768px) {
+      .nav-menu { gap: 15px; }
+    }
+    
+    /* Carousel Section (Home) */
+    #home.carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 50vh;
+      margin-top: 70px; /* account for fixed nav */
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .carousel-slide { min-width: 100%; }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    /* Blog Section (Browse) */
+    #browse.blog {
+      padding: 40px 20px;
+      background-color: #171817;
+    }
+    #browse.blog h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #DE4590;
+      text-transform: uppercase;
+    }
+    .blog-container {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .blog-card {
+      background: #1f1f1f;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    }
+    .blog-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .blog-card .card-content {
+      padding: 16px;
+    }
+    .blog-card .card-content h3 {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #DE4590;
+      text-transform: uppercase;
+    }
+    .blog-card .card-content p {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: #D9CDD4;
+    }
+    .blog-card .card-content a {
+      text-decoration: none;
+      background-color: #DE4590;
+      color: #171817;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    .blog-card .card-content a:hover {
+      background-color: #c43f7d;
+    }
+    
+    /* Catalog Section (Product Cards) */
+    .catalog {
+      padding: 40px 20px;
+      background-color: #171817;
+      border-top: 2px solid #DE4590;
+      border-bottom: 2px solid #DE4590;
+    }
+    .catalog h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #DE4590;
+      text-transform: uppercase;
+    }
+    .catalog-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      scroll-behavior: smooth;
+    }
+    .catalog-container::-webkit-scrollbar { display: none; }
+    .catalog-container { -ms-overflow-style: none; scrollbar-width: none; }
+    .catalog-card {
+      flex: 0 0 auto;
+      width: 250px;
+      background: #1f1f1f;
+      border-radius: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .catalog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    }
+    .catalog-card.selected { border: 3px solid #DE4590; }
+    .catalog-card::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background-color: #DE4590;
+      transition: height 0.3s ease;
+    }
+    .catalog-card:hover::after { height: 8px; }
+    .catalog-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      transition: filter 0.3s ease;
+    }
+    .catalog-card:hover img { filter: brightness(1.1); }
+    .catalog-card .card-content {
+      padding: 16px;
+      text-align: center;
+      color: #D9CDD4;
+      transition: background-color 0.3s ease;
+    }
+    .catalog-card .card-content h3 {
+      margin: 8px 0;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+    .catalog-card .card-content p {
+      font-size: 14px;
+      margin: 4px 0;
+    }
+    .catalog-card .card-content .price {
+      font-weight: bold;
+      color: #DE4590;
+      font-size: 16px;
+    }
+    
+    /* Videos Section (Socials) */
+    #socials.videos {
+      padding: 40px 20px;
+      background-color: #171817;
+    }
+    #socials.videos h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #DE4590;
+      text-transform: uppercase;
+      border-bottom: 2px solid #DE4590;
+      padding-bottom: 10px;
+    }
+    .videos-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      scroll-behavior: smooth;
+    }
+    .videos-container::-webkit-scrollbar { display: none; }
+    .videos-container { -ms-overflow-style: none; scrollbar-width: none; }
+    .video-card {
+      flex: 0 0 auto;
+      width: 300px;
+      height: 180px;
+      background: #1f1f1f;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    }
+    .video-card.selected { border: 3px solid #DE4590; }
+    .video-card iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    .video-card::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background-color: #DE4590;
+      transition: height 0.3s ease;
+    }
+    .video-card:hover::after { height: 8px; }
+    
+    /* Instagram Section */
+    .instagram {
+      padding: 40px 20px;
+      background-color: #171817;
+      border-top: 2px dashed #DE4590;
+      border-bottom: 2px dashed #DE4590;
+    }
+    .instagram h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, #DE4590, #FF5ACD);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+    }
+    .instagram-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      scroll-behavior: smooth;
+    }
+    .instagram-container::-webkit-scrollbar { display: none; }
+    .instagram-container { -ms-overflow-style: none; scrollbar-width: none; }
+    .insta-post {
+      flex: 0 0 auto;
+      width: 300px;
+      height: 300px;
+      background: #1f1f1f;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .insta-post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    }
+    .insta-post img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.3s ease;
+    }
+    .insta-post:hover img { filter: brightness(1.1); }
+    .insta-post::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background-color: #DE4590;
+      transition: height 0.3s ease;
+    }
+    .insta-post:hover::after { height: 8px; }
+    
+    /* About Section */
+    .about {
+      background-color: #DE4590;
+      color: #171817;
+      padding: 60px 20px;
+    }
+    .about-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
+    }
+    @media (min-width: 768px) {
+      .about-container {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .about-image,
+      .about-content {
+        flex: 1;
+      }
+      .about-image { margin-right: 20px; }
+      .about-content { margin-left: 20px; }
+    }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .about-image img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 50%;
+      border: 4px solid #DE4590;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    /* Styled About Content Box */
+    .about-content {
+      max-width: 600px;
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      color: #D9CDD4;
+      border-left: 4px solid #DE4590;
+    }
+    .about-content h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .about-content p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .about-content .features {
+      list-style: none;
+      padding: 0;
+    }
+    .about-content .features li {
+      font-size: 16px;
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 30px;
+    }
+    .about-content .features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #171817;
+      font-weight: bold;
+    }
+    .about-content .cta-button {
+      background-color: transparent;
+      border: 2px solid #171817;
+      color: #171817;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .about-content .cta-button:hover {
+      background-color: #171817;
+      color: #DE4590;
+    }
+    
+    /* Additional About Features */
+    .about-extra {
+      margin-top: 40px;
+      text-align: center;
+      color: #171817;
+    }
+    .about-extra h3 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .strengths-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .strength-item {
+      background-color: #fff;
+      color: #171817;
+      padding: 20px;
+      border-radius: 16px;
+      width: 250px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+    .strength-item:hover { transform: translateY(-5px); }
+    .strength-item img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+    .strength-item h4 {
+      margin: 10px 0;
+      font-size: 20px;
+    }
+    .strength-item p {
+      font-size: 16px;
+    }
+    
+    /* FAQ Section - Enhanced Design */
+    .faq {
+      padding: 40px 20px;
+      background-color: #171817;
+    }
+    .faq h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #DE4590;
+      text-transform: uppercase;
+    }
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq details {
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      padding: 15px 20px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .faq details[open] {
+      background: #2a2a2a;
+    }
+    .faq details:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+    }
+    .faq summary {
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 10px 0;
+      position: relative;
+      list-style: none;
+    }
+    .faq summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq summary::before {
+      content: '+';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #DE4590;
+      transition: transform 0.3s ease;
+    }
+    .faq details[open] summary::before {
+      content: '-';
+    }
+    .faq p {
+      padding: 10px 0 0;
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #D9CDD4;
+    }
+    
+    /* Contact Section */
+    .contact {
+      padding: 60px 20px;
+      background-color: #171817;
+    }
+    .contact-container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .contact-form {
+      flex: 1 1 400px;
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .contact-form h2 {
+      color: #DE4590;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      background: #171817;
+      border: 1px solid #333;
+      border-radius: 4px;
+      padding: 10px;
+      color: #D9CDD4;
+      font-size: 16px;
+      width: 100%;
+    }
+    .contact-form textarea { resize: vertical; min-height: 120px; }
+    .contact-form button {
+      background-color: #DE4590;
+      border: none;
+      border-radius: 4px;
+      padding: 12px;
+      color: #171817;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .contact-form button:hover { background-color: #c43f7d; }
+    .contact-cards {
+      flex: 1 1 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-card {
+      background: #1f1f1f;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      cursor: pointer;
+    }
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    }
+    .contact-card img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .contact-card h3 {
+      margin: 10px 0;
+      font-size: 20px;
+      color: #DE4590;
+    }
+    .contact-card p {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    .contact-card a {
+      background-color: #DE4590;
+      color: #171817;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    .contact-card a:hover { background-color: #c43f7d; }
+    
+    /* Scroll Buttons */
+    .scroll-btn {
+      position: fixed;
+      bottom: 20px;
+      background-color: rgba(222, 69, 144, 0.8);
+      color: #171817;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      z-index: 1100;
+    }
+    .scroll-btn:hover {
+      background-color: rgba(196, 63, 125, 0.9);
+      transform: translateY(-3px);
+    }
+    #scrollToTop { right: 20px; }
+    #scrollToBottom { left: 20px; }
+    
+    /* Footer */
+    footer {
+      background-color: #171817;
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-container p {
+      margin: 0;
+      font-size: 14px;
+    }
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .footer-links li a {
+      text-decoration: none;
+      color: #DE4590;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+    .footer-links li a:hover { color: #FF5ACD; }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <!-- Logo -->
+      <div class="logo">
+        <img src="https://via.placeholder.com/50" alt="Logo" />
+      </div>
+      <!-- Navigation Menu -->
+      <ul class="nav-menu">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#browse">Browse</a></li>
+        <li><a href="#socials">Socials</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- Carousel Section (Home) -->
+  <section id="home" class="carousel">
+    <div class="carousel-track">
+      <div class="carousel-slide">
+        <img src="https://via.placeholder.com/1920x1080?text=Slide+1" alt="Slide 1" />
+      </div>
+      <div class="carousel-slide">
+        <img src="https://via.placeholder.com/1920x1080?text=Slide+2" alt="Slide 2" />
+      </div>
+      <div class="carousel-slide">
+        <img src="https://via.placeholder.com/1920x1080?text=Slide+3" alt="Slide 3" />
+      </div>
+    </div>
+  </section>
+  
+  <!-- Blog Section (Browse) -->
+  <section id="browse" class="blog">
+    <h2>Blog</h2>
+    <div class="blog-container">
+      <!-- Blog Post Card 1 -->
+      <div class="blog-card">
+        <img src="https://via.placeholder.com/600x400?text=Blog+Image+1" alt="Blog Post 1">
+        <div class="card-content">
+          <h3>Blog Post One</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum.</p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+      <!-- Blog Post Card 2 -->
+      <div class="blog-card">
+        <img src="https://via.placeholder.com/600x400?text=Blog+Image+2" alt="Blog Post 2">
+        <div class="card-content">
+          <h3>Blog Post Two</h3>
+          <p>Nullam nec diam et arcu sollicitudin cursus. Fusce at dignissim dui. Aliquam erat volutpat.</p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+      <!-- Blog Post Card 3 -->
+      <div class="blog-card">
+        <img src="https://via.placeholder.com/600x400?text=Blog+Image+3" alt="Blog Post 3">
+        <div class="card-content">
+          <h3>Blog Post Three</h3>
+          <p>Curabitur at lacus ac velit ornare lobortis. Praesent ac massa at ligula laoreet iaculis.</p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Catalog Section (Product Cards) -->
+  <section class="catalog">
+    <h2>Our Products</h2>
+    <div class="catalog-container">
+      <!-- Product Card 1 -->
+      <div class="catalog-card">
+        <img src="https://via.placeholder.com/250x150?text=Product" alt="Product 1" />
+        <div class="card-content">
+          <h3>Product 1</h3>
+          <p>A short description of product 1.</p>
+          <span class="price">$29.99</span>
+        </div>
+      </div>
+      <!-- Product Card 2 -->
+      <div class="catalog-card">
+        <img src="https://via.placeholder.com/250x150?text=Product" alt="Product 2" />
+        <div class="card-content">
+          <h3>Product 2</h3>
+          <p>A short description of product 2.</p>
+          <span class="price">$39.99</span>
+        </div>
+      </div>
+      <!-- Product Card 3 -->
+      <div class="catalog-card">
+        <img src="https://via.placeholder.com/250x150?text=Product" alt="Product 3" />
+        <div class="card-content">
+          <h3>Product 3</h3>
+          <p>A short description of product 3.</p>
+          <span class="price">$49.99</span>
+        </div>
+      </div>
+      <!-- Product Card 4 -->
+      <div class="catalog-card">
+        <img src="https://via.placeholder.com/250x150?text=Product" alt="Product 4" />
+        <div class="card-content">
+          <h3>Product 4</h3>
+          <p>A short description of product 4.</p>
+          <span class="price">$59.99</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Socials Section (Videos & Instagram) -->
+  <section id="socials" class="videos">
+    <h2>Our Videos</h2>
+    <div class="videos-container">
+      <!-- Video Card 1 -->
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <!-- Video Card 2 -->
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <!-- Video Card 3 -->
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <!-- Video Card 4 -->
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+    </div>
+    
+    <!-- Instagram Section -->
+    <section class="instagram">
+      <h2>Instagram Posts</h2>
+      <div class="instagram-container">
+        <!-- Insta Post 1 -->
+        <div class="insta-post">
+          <a href="https://www.instagram.com/yourpage" target="_blank">
+            <img src="https://via.placeholder.com/300?text=Insta+Post+1" alt="Instagram Post 1">
+          </a>
+        </div>
+        <!-- Insta Post 2 -->
+        <div class="insta-post">
+          <a href="https://www.instagram.com/yourpage" target="_blank">
+            <img src="https://via.placeholder.com/300?text=Insta+Post+2" alt="Instagram Post 2">
+          </a>
+        </div>
+        <!-- Insta Post 3 -->
+        <div class="insta-post">
+          <a href="https://www.instagram.com/yourpage" target="_blank">
+            <img src="https://via.placeholder.com/300?text=Insta+Post+3" alt="Instagram Post 3">
+          </a>
+        </div>
+        <!-- Insta Post 4 -->
+        <div class="insta-post">
+          <a href="https://www.instagram.com/yourpage" target="_blank">
+            <img src="https://via.placeholder.com/300?text=Insta+Post+4" alt="Instagram Post 4">
+          </a>
+        </div>
+      </div>
+    </section>
+  </section>
+  
+  <!-- FAQ Section -->
+  <section class="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-container">
+      <details>
+        <summary>What services do you offer?</summary>
+        <p>We offer creative design, web development, digital marketing, and branding services.</p>
+      </details>
+      <details>
+        <summary>How can I get a quote?</summary>
+        <p>You can contact us via our contact form or call us directly for a personalized quote.</p>
+      </details>
+      <details>
+        <summary>What is your turnaround time?</summary>
+        <p>Turnaround time varies by project, but we strive to deliver quality work promptly.</p>
+      </details>
+    </div>
+  </section>
+  
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="about-container">
+      <div class="about-image">
+        <img src="https://via.placeholder.com/400x400?text=About+Image" alt="About Us">
+      </div>
+      <div class="about-content">
+        <h2>About Us</h2>
+        <p>
+          We are a modern creative agency dedicated to designing sleek and interactive web experiences.
+          Our passion for innovation drives us to deliver high‑quality digital products that inspire and engage.
+        </p>
+        <ul class="features">
+          <li>Innovative Designs</li>
+          <li>Cutting-edge Technology</li>
+          <li>Customer-Centric Solutions</li>
+        </ul>
+        <button class="cta-button">Learn More</button>
+      </div>
+    </div>
+    <div class="about-extra">
+      <h3>Our Key Strengths</h3>
+      <div class="strengths-grid">
+        <div class="strength-item">
+          <img src="https://via.placeholder.com/80?text=Icon" alt="Quality">
+          <h4>Quality</h4>
+          <p>We maintain the highest standards in every project.</p>
+        </div>
+        <div class="strength-item">
+          <img src="https://via.placeholder.com/80?text=Icon" alt="Innovation">
+          <h4>Innovation</h4>
+          <p>We push creative boundaries to deliver cutting-edge solutions.</p>
+        </div>
+        <div class="strength-item">
+          <img src="https://via.placeholder.com/80?text=Icon" alt="Support">
+          <h4>Support</h4>
+          <p>Our dedicated team is available around the clock for you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="contact-container">
+      <!-- Contact Form -->
+      <div class="contact-form">
+        <h2>Get in Touch</h2>
+        <form>
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+      <!-- Contact Cards -->
+      <div class="contact-cards">
+        <!-- Blusky Card -->
+        <div class="contact-card">
+          <img src="https://via.placeholder.com/80?text=Blusky" alt="Blusky">
+          <h3>Blusky</h3>
+          <p>Follow us on Blusky for updates.</p>
+          <a href="https://www.blueskyweb.xyz/yourpage" target="_blank">Visit</a>
+        </div>
+        <!-- Instagram Card -->
+        <div class="contact-card">
+          <img src="https://via.placeholder.com/80?text=Insta" alt="Instagram">
+          <h3>Instagram</h3>
+          <p>Follow our Instagram for behind-the-scenes.</p>
+          <a href="https://www.instagram.com/yourpage" target="_blank">Visit</a>
+        </div>
+        <!-- YouTube Card -->
+        <div class="contact-card">
+          <img src="https://via.placeholder.com/80?text=YouTube" alt="YouTube">
+          <h3>YouTube</h3>
+          <p>Subscribe to our channel for tutorials.</p>
+          <a href="https://www.youtube.com/yourchannel" target="_blank">Visit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Scroll Buttons -->
+  <button id="scrollToTop" class="scroll-btn">Top</button>
+  <button id="scrollToBottom" class="scroll-btn">Bottom</button>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <p>© 2025 Your Company. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </footer>
+  
+  <!-- JavaScript for Navigation Active State & Card Selection -->
+  <script>
+    // Navigation active state
+    document.querySelectorAll('.nav-menu li a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.nav-menu li a').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    
+    // Make product cards selectable
+    document.querySelectorAll('.catalog-card').forEach(card => {
+      card.addEventListener('click', function() {
+        this.classList.toggle('selected');
+      });
+    });
+    
+    // Make video cards selectable
+    document.querySelectorAll('.video-card').forEach(card => {
+      card.addEventListener('click', function() {
+        this.classList.toggle('selected');
+      });
+    });
+  </script>
+  
+  <!-- JavaScript for Carousel Auto-Slide & Content Duplication -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Carousel auto-slide
+      const track = document.querySelector('.carousel-track');
+      const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+      let currentIndex = 0;
+      const slideCount = slides.length;
+      
+      function moveToSlide(index) {
+        track.style.transform = 'translateX(-' + (index * 100) + '%)';
+      }
+      
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % slideCount;
+        moveToSlide(currentIndex);
+      }, 3000);
+      
+      // Duplicate catalog content for a seamless looping effect when scrolling manually
+      const catalogContainer = document.querySelector('.catalog-container');
+      catalogContainer.innerHTML += catalogContainer.innerHTML;
+      
+      // Duplicate video cards for a looping effect (optional)
+      const videosContainer = document.querySelector('.videos-container');
+      if (videosContainer) { videosContainer.innerHTML += videosContainer.innerHTML; }
+      
+      // Duplicate Instagram posts for a looping effect (optional)
+      const instaContainer = document.querySelector('.instagram-container');
+      if (instaContainer) { instaContainer.innerHTML += instaContainer.innerHTML; }
+    });
+    
+    // Scroll Buttons functionality
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    const scrollToBottomBtn = document.getElementById('scrollToBottom');
+    
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    scrollToBottomBtn.addEventListener('click', () => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
